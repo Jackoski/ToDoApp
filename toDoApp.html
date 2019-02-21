@@ -9,10 +9,62 @@
 </head>
 
 <body>
-    <input type="text">
-    <button class="add"></button>
-    <form action=""></form>
+    <form action="">
+        <input type="text">
+        <button class="add">add task</button>
     </form>
+    <h1>Liczba zadań: <span>0</span></h1>
+
+    <ul>
+
+    </ul>
+    <script>
+        const ToDoList = [];
+        const form = document.querySelector('form');
+        const ul = document.querySelector('ul')
+        const taskNumber = document.querySelector('h1 span')
+        const listItems = document.getElementsByClassName('task')
+        const input = document.querySelector('input')
+
+        const clearArray = () => {
+            ul.textContent = ''
+            ToDoList.forEach((toDoElement, key) => {
+                toDoElement.dataset.key = key
+                ul.appendChild(toDoElement)
+            })
+        }
+
+        const removeTask = (e) => {
+
+            const index = e.target.parentNode.dataset.key
+            ToDoList.splice(index, 1)
+            clearArray()
+            taskNumber.textContent = listItems.length
+        }
+
+
+        const addTask = (e) => {
+            e.preventDefault()
+            const titleTask = input.value
+            if (titleTask === '') {
+                return
+            }
+            const task = document.createElement('li')
+            task.className = 'task'
+            task.innerHTML = titleTask + " <button>Delete</button>"
+            ToDoList.push(task)
+            clearArray()
+            ul.appendChild(task)
+            input.value = ''
+            task.querySelector('button').addEventListener('click', removeTask)
+            taskNumber.textContent = listItems.length
+        }
+
+        const searchTask = () => {
+
+        }
+        form.addEventListener('submit', addTask)
+    </script>
 </body>
 
 </html>
