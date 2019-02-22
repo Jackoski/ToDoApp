@@ -19,16 +19,17 @@
 
     </ul>
     <script>
-        const ToDoList = [];
+        const toDoList = [];
         const form = document.querySelector('form');
         const ul = document.querySelector('ul')
         const taskNumber = document.querySelector('h1 span')
         const listItems = document.getElementsByClassName('task')
         const input = document.querySelector('input')
+        let li
 
         const clearArray = () => {
             ul.textContent = ''
-            ToDoList.forEach((toDoElement, key) => {
+            toDoList.forEach((toDoElement, key) => {
                 toDoElement.dataset.key = key
                 ul.appendChild(toDoElement)
             })
@@ -37,7 +38,7 @@
         const removeTask = (e) => {
 
             const index = e.target.parentNode.dataset.key
-            ToDoList.splice(index, 1)
+            toDoList.splice(index, 1)
             clearArray()
             taskNumber.textContent = listItems.length
         }
@@ -52,7 +53,7 @@
             const task = document.createElement('li')
             task.className = 'task'
             task.innerHTML = titleTask + " <button>Delete</button>"
-            ToDoList.push(task)
+            toDoList.push(task)
             clearArray()
             ul.appendChild(task)
             input.value = ''
@@ -60,9 +61,20 @@
             taskNumber.textContent = listItems.length
         }
 
-        const searchTask = () => {
+        const searchTask = (e) => {
+            const searchTxt = e.target.value.toLowerCase()
+            let searchArray = toDoList
+            searchArray = searchArray.filter(li =>
+                li.textContent.toLowerCase().includes(searchTxt)
+            )
+            ul.textContent = ''
+            searchArray.forEach(li => {
+                ul.appendChild(li)
+                console.log(searchArray)
 
+            })
         }
+        input.addEventListener('input', searchTask)
         form.addEventListener('submit', addTask)
     </script>
 </body>
