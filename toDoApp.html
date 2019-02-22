@@ -65,7 +65,7 @@
             const searchTxt = e.target.value.toLowerCase()
             let searchArray = toDoList
             searchArray = searchArray.filter(li =>
-                li.textContent.toLowerCase().includes(searchTxt)
+                li.textContent.toLowerCase().replace('delete', '').includes(searchTxt)
             )
             ul.textContent = ''
             searchArray.forEach(li => {
